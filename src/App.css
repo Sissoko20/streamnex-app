@@ -1,38 +1,38 @@
-.App {
+.channels-list {
+  padding: 15px;
+}
+.player-container {
+  padding: 15px;
+}
+
+.historySettings{
+
+}
+
+.ItemMenu{
+
+}
+
+
+/* Élément | http://localhost:3000/ */
+
+.ant-layout-sider {
+
+  padding-top: 20vh;
   text-align: center;
 }
+.historySettings{
+  text-align: center;
+  translate: 0px 20vh;
+}
+.ItemMenu{
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+  padding-top: 20vh;
+  text-align: center;
+
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
 
-.App-link {
-  color: #61dafb;
-}
+/* Élément | http://localhost:3000/ */
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
