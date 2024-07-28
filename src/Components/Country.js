@@ -1,27 +1,46 @@
-import React, { useState } from 'react';
-import { SearchOutlined, WechatWorkOutlined } from '@ant-design/icons';
+// Components/Country.js
+import React, { useState, useEffect } from 'react';
+import { List, Spin } from 'antd';
+import 'antd/dist/reset.css';
+const Country = () => {
+  const [countries, setCountries] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-import { Button, Flex, Tooltip } from 'antd';
-function Country(){
+  useEffect(() => {
+    const fetchCountries = async () => {
+      try {
+        const response = await fetch('https://iptv-org.github.io/api/countries.json');
+        const data = await response.json();
+        setCountries(data.filter(country => country.languages.includes('fra')));
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching countries:", error);
+        setLoading(false);
+      }
+    };
 
-const [position, setposition]=useState('end')
+    fetchCountries();
+  }, []);
 
-    return(
-        <div style={{
-            
-            display:'flex',
-            flexDirection:'row',
-            justifyContent:'space-around',
+  if (loading) {
+    return <Spin tip="Loading countries..." />;
+  }
 
-
-        }}>
-       <WechatWorkOutlined />
-       <Button ghost style={{
-        border:'none'
-       }}>Country</Button>
-          
-        </div>
-    )
-}
+  return (
+    <div style={{ padding: '20px' }}>
+      <h2>French Speaking Countries</h2>
+      <List
+        bordered
+        dataSource={countries}
+        renderItem={country => (
+          <List.Item key={country.code}>
+            <img src={country.flag} alt={`Flag of ${country.name}`} style={{ width: '20px', marginRight: '10px' }} />
+            {country.name}
+          </List.Item>
+        )}
+      />
+    </div>
+  );
+};
 
 export default Country;
