@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Avatar, List, Spin, Modal } from 'antd';
-import ReactPlayer from 'react-player';
+import Hls from 'hls.js';
 import 'antd/dist/reset.css';
 
 const Country = () => {
@@ -10,13 +10,14 @@ const Country = () => {
   const [channels, setChannels] = useState([]);
   const [channelsLoading, setChannelsLoading] = useState(false);
   const [selectedChannel, setSelectedChannel] = useState(null);
+  const videoRef = useRef(null);
+  const hlsRef = useRef(null); // Utilisez une référence pour le lecteur HLS
 
   useEffect(() => {
     const fetchCountries = async () => {
       try {
         const response = await fetch('https://iptv-org.github.io/api/countries.json');
         let data = await response.json();
-        console.log(data); // Afficher toutes les données dans la console
 
         setCountries(data);
         setLoading(false);
@@ -71,6 +72,27 @@ const Country = () => {
     setSelectedChannel(channel);
   };
 
+  useEffect(() => {
+    if (selectedChannel && videoRef.current) {
+      if (Hls.isSupported()) {
+        hlsRef.current = new Hls();
+        hlsRef.current.loadSource(selectedChannel.url);
+        hlsRef.current.attachMedia(videoRef.current);
+      }
+    } else {
+      if (hlsRef.current) {
+        hlsRef.current.destroy();
+        hlsRef.current = null;
+      }
+    }
+    return () => {
+      if (hlsRef.current) {
+        hlsRef.current.destroy();
+        hlsRef.current = null;
+      }
+    };
+  }, [selectedChannel]);
+
   if (loading) {
     return <Spin tip="Loading countries..." />;
   }
@@ -87,10 +109,10 @@ const Country = () => {
             style={{ display: 'flex', alignItems: 'flex-start', justifyContent:'flex-start', cursor: 'pointer' }} 
             onClick={() => handleCountryClick(country)}
           >
-            <Avatar icon={country.flag} />
+            <Avatar src={country.flag} />
             <div style={{ marginLeft: '10px' }}>
               <strong>{country.name}</strong> ({country.code})
-
+              <div>Languages: {country.languages.join(', ')}</div>
             </div>
           </List.Item>
         )}
@@ -128,7 +150,7 @@ const Country = () => {
         footer={null}
       >
         {selectedChannel && (
-          <ReactPlayer url={selectedChannel.url} controls width="100%" />
+          <video ref={videoRef} controls style={{ width: '100%' }} />
         )}
       </Modal>
     </div>
