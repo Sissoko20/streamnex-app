@@ -109,10 +109,10 @@ const Country = () => {
             style={{ display: 'flex', alignItems: 'flex-start', justifyContent:'flex-start', cursor: 'pointer' }} 
             onClick={() => handleCountryClick(country)}
           >
-            <Avatar src={country.flag} />
+            <Avatar icon={country.flag} />
             <div style={{ marginLeft: '10px' }}>
               <strong>{country.name}</strong> ({country.code})
-              <div>Languages: {country.languages.join(', ')}</div>
+
             </div>
           </List.Item>
         )}
