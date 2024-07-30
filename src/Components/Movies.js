@@ -29,16 +29,7 @@ const Country = () => {
   return (
     <div style={{ padding: '20px' }}>
       <h2>French Speaking Countries</h2>
-      <List
-        bordered
-        dataSource={countries}
-        renderItem={country => (
-          <List.Item key={country.code}>
-            <img src={country.flag} alt={`Flag of ${country.name}`} style={{ width: '20px', marginRight: '10px' }} />
-            {country.name}
-          </List.Item>
-        )}
-      />
+      
     </div>
   );
 };

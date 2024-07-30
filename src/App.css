@@ -16,15 +16,6 @@
 
 /* Élément | http://localhost:3000/ */
 
-.ant-layout-sider {
-
-  padding-top: 20vh;
-  text-align: center;
-}
-.historySettings{
-  text-align: center;
-  translate: 0px 20vh;
-}
 .ItemMenu{
 
   padding-top: 20vh;
@@ -34,5 +25,16 @@
 
 
 
+
 /* Élément | http://localhost:3000/ */
 
+.BlueItem
+{
+  background: rgba( 56, 80, 29, 0.3 );
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 13.5px );
+  -webkit-backdrop-filter: blur( 13.5px );
+  border-radius: 10px;
+  border: 1px solid rgba( 255, 255, 255, 0.18 );
+}
+  
