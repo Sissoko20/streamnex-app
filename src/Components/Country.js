@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Avatar, List, Spin, Modal} from 'antd';
+import { Avatar, List, Spin, Modal } from 'antd';
+import ReactPlayer from 'react-player';
 import 'antd/dist/reset.css';
 
 const Country = () => {
   const [countries, setCountries] = useState([]);
   const [loading, setLoading] = useState(true);
-
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [channels, setChannels] = useState([]);
   const [channelsLoading, setChannelsLoading] = useState(false);
+  const [selectedChannel, setSelectedChannel] = useState(null);
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -16,15 +17,6 @@ const Country = () => {
         const response = await fetch('https://iptv-org.github.io/api/countries.json');
         let data = await response.json();
         console.log(data); // Afficher toutes les données dans la console
-
-        // Correction des URLs des drapeaux si nécessaire
-        data = data.map(country => {
-          if (!country.flag) {
-            // Si l'URL du drapeau est manquante, assigner une URL par défaut ou corriger l'URL ici
-            country.flag = `https://example.com/flags/${country.code.toLowerCase()}.png`;
-          }
-          return country;
-        });
 
         setCountries(data);
         setLoading(false);
@@ -69,16 +61,19 @@ const Country = () => {
 
     return channels;
   };
+
   const handleCountryClick = (country) => {
     setSelectedCountry(country);
     fetchChannels(country.code);
   };
 
+  const handleChannelClick = (channel) => {
+    setSelectedChannel(channel);
+  };
+
   if (loading) {
     return <Spin tip="Loading countries..." />;
   }
-
-
 
   return (
     <div style={{ padding: '20px' }}>
@@ -91,12 +86,11 @@ const Country = () => {
             key={country.code} 
             style={{ display: 'flex', alignItems: 'flex-start', justifyContent:'flex-start', cursor: 'pointer' }} 
             onClick={() => handleCountryClick(country)}
-            
           >
             <Avatar icon={country.flag} />
             <div style={{ marginLeft: '10px' }}>
               <strong>{country.name}</strong> ({country.code})
-      
+
             </div>
           </List.Item>
         )}
@@ -115,11 +109,26 @@ const Country = () => {
             bordered
             dataSource={channels}
             renderItem={channel => (
-              <List.Item key={channel.url}>
-                <a href={channel.url}  rel="noopener noreferrer">{channel.name}</a>
+              <List.Item 
+                key={channel.url}
+                onClick={() => handleChannelClick(channel)}
+                style={{ cursor: 'pointer' }}
+              >
+                {channel.name}
               </List.Item>
             )}
           />
+        )}
+      </Modal>
+
+      <Modal
+        title={selectedChannel ? `Lecture de ${selectedChannel.name}` : ''}
+        visible={!!selectedChannel}
+        onCancel={() => setSelectedChannel(null)}
+        footer={null}
+      >
+        {selectedChannel && (
+          <ReactPlayer url={selectedChannel.url} controls width="100%" />
         )}
       </Modal>
     </div>
