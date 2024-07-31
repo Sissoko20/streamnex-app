@@ -130,7 +130,7 @@ const Country = () => {
 
   return (
     <div style={{ padding: "20px" }}>
-      <h2>Affichage des chaines par pays</h2>
+      <h2>Chaines par pays</h2>
       <List
         bordered
         dataSource={countries}
