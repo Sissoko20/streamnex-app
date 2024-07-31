@@ -22,6 +22,7 @@ import TvShows from "./Components/TvShows";
 import History from "./Components/History";
 import Setting from "./Components/Settings";
 import { SpeedInsights } from "@vercel/speed-insights/react";
+import { Analytics } from "@vercel/analytics/react";
 
 const { Sider, Content } = Layout;
 
@@ -168,6 +169,7 @@ const App = () => {
           <Content style={{ margin: "24px 16px 0", overflow: "initial" }}>
             {renderContent()}
             <SpeedInsights />
+            <Analytics />
           </Content>
         </Layout>
       </Layout>

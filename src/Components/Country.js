@@ -2,6 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import { Avatar, List, Spin, Modal } from "antd";
 import Hls from "hls.js";
 import "antd/dist/reset.css";
+import { SpeedInsights } from "@vercel/speed-insights/react";
+import { Analytics } from "@vercel/analytics/react";
+
 
 const Country = () => {
   const [countries, setCountries] = useState([]);
@@ -208,6 +211,8 @@ const Country = () => {
           />
         )}
       </Modal>
+      <SpeedInsights />
+      <Analytics />
     </div>
   );
 };
