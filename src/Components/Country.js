@@ -12,7 +12,6 @@ const Country = () => {
   const [selectedChannel, setSelectedChannel] = useState(null);
   const [epgData, setEpgData] = useState([]);
   const [epgLoading, setEpgLoading] = useState(false);
-  const [showChannelModal, setShowChannelModal] = useState(false);
   const videoRef = useRef(null);
   const hlsRef = useRef(null);
 
@@ -60,15 +59,9 @@ const Country = () => {
       const data = await response.json();
       setEpgData(data.programs);
       setEpgLoading(false);
-      if (data.programs.length > 0) {
-        setShowChannelModal(true);
-      } else {
-        setSelectedChannel(null); // Reset selected channel if no EPG data
-      }
     } catch (error) {
       console.error("Error fetching EPG data:", error);
       setEpgLoading(false);
-      setSelectedChannel(null); // Reset selected channel on error
     }
   };
 
@@ -82,12 +75,12 @@ const Country = () => {
         const info = line.split(",");
         currentChannel.name = info[1];
         const attrs = info[0].split(" ");
-        attrs.forEach((attr) => {
+        attrs.forEach(attr => {
           if (attr.startsWith("tvg-logo=")) {
-            currentChannel.logo = attr.split("=")[1].replace(/"/g, "");
+            currentChannel.logo = attr.split("=")[1].replace(/"/g, '');
           }
           if (attr.startsWith("tvg-id=")) {
-            currentChannel.id = attr.split("=")[1].replace(/"/g, "");
+            currentChannel.id = attr.split("=")[1].replace(/"/g, '');
           }
         });
       } else if (line.startsWith("http")) {
@@ -190,11 +183,8 @@ const Country = () => {
 
       <Modal
         title={selectedChannel ? `Lecture de ${selectedChannel.name}` : ""}
-        visible={showChannelModal}
-        onCancel={() => {
-          setSelectedChannel(null);
-          setShowChannelModal(false);
-        }}
+        visible={!!selectedChannel}
+        onCancel={() => setSelectedChannel(null)}
         footer={null}
       >
         {selectedChannel && (
@@ -211,10 +201,7 @@ const Country = () => {
                 <div>
                   <strong>{program.title}</strong>
                   <p>{program.description}</p>
-                  <p>
-                    {new Date(program.start).toLocaleString()} -{" "}
-                    {new Date(program.stop).toLocaleString()}
-                  </p>
+                  <p>{new Date(program.start).toLocaleString()} - {new Date(program.stop).toLocaleString()}</p>
                 </div>
               </List.Item>
             )}
