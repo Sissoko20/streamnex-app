@@ -12,7 +12,7 @@ import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
 } from "@ant-design/icons";
-import Search from "./Components/Search";
+import SearchBar from "./Components/SearchBar";
 import Country from "./Components/Country";
 import LiveTV from "./Components/LiveTV";
 import Radio from "./Components/Radio";
@@ -33,7 +33,7 @@ const App = () => {
   const renderContent = () => {
     switch (selectedKey) {
       case "1":
-        return <Search />;
+        return <SearchBar />;
       case "2":
         return <Country />;
       case "3":

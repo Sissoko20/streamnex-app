@@ -1,16 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Card, Col, Row, Spin, Modal, List, Avatar } from "antd";
+import { Avatar, List, Spin, Modal } from "antd";
 import Hls from "hls.js";
 import "antd/dist/reset.css";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { Analytics } from "@vercel/analytics/react";
 
-const { Meta } = Card;
 
-const Category = () => {
-  const [categories, setCategories] = useState([]);
+const Country = () => {
+  const [countries, setCountries] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCountry, setSelectedCountry] = useState(null);
   const [channels, setChannels] = useState([]);
   const [channelsLoading, setChannelsLoading] = useState(false);
   const [selectedChannel, setSelectedChannel] = useState(null);
@@ -20,28 +19,29 @@ const Category = () => {
   const hlsRef = useRef(null);
 
   useEffect(() => {
-    const fetchCategories = async () => {
+    const fetchCountries = async () => {
       try {
         const response = await fetch(
-          "https://iptv-org.github.io/api/categories.json"
+          "https://iptv-org.github.io/api/countries.json"
         );
-        const data = await response.json();
-        setCategories(data);
+        let data = await response.json();
+
+        setCountries(data);
         setLoading(false);
       } catch (error) {
-        console.error("Error fetching categories:", error);
+        console.error("Error fetching countries:", error);
         setLoading(false);
       }
     };
 
-    fetchCategories();
+    fetchCountries();
   }, []);
 
-  const fetchChannels = async (categoryId) => {
+  const fetchChannels = async (countryCode) => {
     setChannelsLoading(true);
     try {
       const response = await fetch(
-        `https://iptv-org.github.io/iptv/categories/${categoryId.toLowerCase()}.m3u`
+        `https://iptv-org.github.io/iptv/countries/${countryCode.toLowerCase()}.m3u`
       );
       const m3uData = await response.text();
       const parsedChannels = parseM3U(m3uData);
@@ -78,12 +78,12 @@ const Category = () => {
         const info = line.split(",");
         currentChannel.name = info[1];
         const attrs = info[0].split(" ");
-        attrs.forEach((attr) => {
+        attrs.forEach(attr => {
           if (attr.startsWith("tvg-logo=")) {
-            currentChannel.logo = attr.split("=")[1].replace(/"/g, "");
+            currentChannel.logo = attr.split("=")[1].replace(/"/g, '');
           }
           if (attr.startsWith("tvg-id=")) {
-            currentChannel.id = attr.split("=")[1].replace(/"/g, "");
+            currentChannel.id = attr.split("=")[1].replace(/"/g, '');
           }
         });
       } else if (line.startsWith("http")) {
@@ -96,9 +96,9 @@ const Category = () => {
     return channels;
   };
 
-  const handleCategoryClick = (category) => {
-    setSelectedCategory(category);
-    fetchChannels(category.name);
+  const handleCountryClick = (country) => {
+    setSelectedCountry(country);
+    fetchChannels(country.code);
   };
 
   const handleChannelClick = (channel) => {
@@ -128,30 +128,38 @@ const Category = () => {
   }, [selectedChannel]);
 
   if (loading) {
-    return <Spin tip="Loading categories..." />;
+    return <Spin tip="Loading countries..." />;
   }
 
   return (
     <div style={{ padding: "20px" }}>
-      <h2>Chaines par catégorie</h2>
-      <Row gutter={[16, 16]}>
-        {categories.map((category) => (
-          <Col xs={24} sm={12} md={8} lg={6} xl={4} key={category.name}>
-            <Card
-              hoverable
-              onClick={() => handleCategoryClick(category)}
-              cover={<img alt={category.name} src={category.icon} />}
-            >
-              <Meta title={category.name} />
-            </Card>
-          </Col>
-        ))}
-      </Row>
+      <h2>Chaines par pays</h2>
+      <List
+        bordered
+        dataSource={countries}
+        renderItem={(country) => (
+          <List.Item
+            key={country.code}
+            style={{
+              display: "flex",
+              alignItems: "flex-start",
+              justifyContent: "flex-start",
+              cursor: "pointer",
+            }}
+            onClick={() => handleCountryClick(country)}
+          >
+            <Avatar icon={country.flag} />
+            <div style={{ marginLeft: "10px" }}>
+              <strong>{country.name}</strong> ({country.code})
+            </div>
+          </List.Item>
+        )}
+      />
 
       <Modal
-        title={selectedCategory ? `Chaînes de ${selectedCategory.name}` : ""}
-        visible={!!selectedCategory}
-        onCancel={() => setSelectedCategory(null)}
+        title={selectedCountry ? `Chaînes de ${selectedCountry.name}` : ""}
+        visible={!!selectedCountry}
+        onCancel={() => setSelectedCountry(null)}
         footer={null}
       >
         {channelsLoading ? (
@@ -196,10 +204,7 @@ const Category = () => {
                 <div>
                   <strong>{program.title}</strong>
                   <p>{program.description}</p>
-                  <p>
-                    {new Date(program.start).toLocaleString()} -{" "}
-                    {new Date(program.stop).toLocaleString()}
-                  </p>
+                  <p>{new Date(program.start).toLocaleString()} - {new Date(program.stop).toLocaleString()}</p>
                 </div>
               </List.Item>
             )}
@@ -212,4 +217,4 @@ const Category = () => {
   );
 };
 
-export default Category;
+export default Country;

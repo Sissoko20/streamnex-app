@@ -4,6 +4,7 @@ import Hls from "hls.js";
 import "antd/dist/reset.css";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { Analytics } from "@vercel/analytics/react";
+import SearchBar from "./SearchBar"; // Assurez-vous d'importer le nouveau composant
 
 const { Meta } = Card;
 
@@ -12,6 +13,7 @@ const Category = () => {
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [channels, setChannels] = useState([]);
+  const [filteredChannels, setFilteredChannels] = useState([]);
   const [channelsLoading, setChannelsLoading] = useState(false);
   const [selectedChannel, setSelectedChannel] = useState(null);
   const [epgData, setEpgData] = useState([]);
@@ -25,9 +27,9 @@ const Category = () => {
         const response = await fetch("https://iptv-org.github.io/api/categories.json");
         const data = await response.json();
         setCategories(data);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching categories:", error);
-      } finally {
         setLoading(false);
       }
     };
@@ -44,9 +46,10 @@ const Category = () => {
       const m3uData = await response.text();
       const parsedChannels = parseM3U(m3uData);
       setChannels(parsedChannels);
+      setFilteredChannels(parsedChannels);
+      setChannelsLoading(false);
     } catch (error) {
       console.error("Error fetching channels:", error);
-    } finally {
       setChannelsLoading(false);
     }
   };
@@ -59,9 +62,9 @@ const Category = () => {
       );
       const data = await response.json();
       setEpgData(data.programs);
+      setEpgLoading(false);
     } catch (error) {
       console.error("Error fetching EPG data:", error);
-    } finally {
       setEpgLoading(false);
     }
   };
@@ -104,6 +107,13 @@ const Category = () => {
     fetchEpgData(channel.id);
   };
 
+  const handleSearch = (value) => {
+    const filtered = channels.filter((channel) =>
+      channel.name.toLowerCase().includes(value.toLowerCase())
+    );
+    setFilteredChannels(filtered);
+  };
+
   useEffect(() => {
     if (selectedChannel && videoRef.current) {
       if (Hls.isSupported()) {
@@ -134,7 +144,7 @@ const Category = () => {
       <h2>Chaines par catégorie</h2>
       <Row gutter={[16, 16]}>
         {categories.map((category) => (
-          <Col span={8} key={category.name}>
+          <Col xs={24} sm={12} md={8} lg={6} key={category.name}>
             <Card
               hoverable
               onClick={() => handleCategoryClick(category)}
@@ -152,12 +162,13 @@ const Category = () => {
         onCancel={() => setSelectedCategory(null)}
         footer={null}
       >
+        <SearchBar onSearch={handleSearch} />
         {channelsLoading ? (
           <Spin tip="Loading channels..." />
         ) : (
           <List
             bordered
-            dataSource={channels}
+            dataSource={filteredChannels}
             renderItem={(channel) => (
               <List.Item
                 key={channel.url}
