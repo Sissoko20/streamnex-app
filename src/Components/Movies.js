@@ -28,7 +28,7 @@ const Country = () => {
 
   return (
     <div style={{ padding: '20px' }}>
-      <h2>French Speaking Countries</h2>
+      <h2>Loading Movies</h2>
       
     </div>
   );

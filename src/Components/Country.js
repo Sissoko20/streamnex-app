@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Avatar, List, Spin, Modal } from 'antd';
-import Hls from 'hls.js';
-import 'antd/dist/reset.css';
+import React, { useState, useEffect, useRef } from "react";
+import { Avatar, List, Spin, Modal } from "antd";
+import Hls from "hls.js";
+import "antd/dist/reset.css";
 
 const Country = () => {
   const [countries, setCountries] = useState([]);
@@ -10,13 +10,18 @@ const Country = () => {
   const [channels, setChannels] = useState([]);
   const [channelsLoading, setChannelsLoading] = useState(false);
   const [selectedChannel, setSelectedChannel] = useState(null);
+  const [epgData, setEpgData] = useState([]);
+  const [epgLoading, setEpgLoading] = useState(false);
+  const [showChannelModal, setShowChannelModal] = useState(false);
   const videoRef = useRef(null);
-  const hlsRef = useRef(null); // Utilisez une référence pour le lecteur HLS
+  const hlsRef = useRef(null);
 
   useEffect(() => {
     const fetchCountries = async () => {
       try {
-        const response = await fetch('https://iptv-org.github.io/api/countries.json');
+        const response = await fetch(
+          "https://iptv-org.github.io/api/countries.json"
+        );
         let data = await response.json();
 
         setCountries(data);
@@ -33,7 +38,9 @@ const Country = () => {
   const fetchChannels = async (countryCode) => {
     setChannelsLoading(true);
     try {
-      const response = await fetch(`https://iptv-org.github.io/iptv/countries/${countryCode.toLowerCase()}.m3u`);
+      const response = await fetch(
+        `https://iptv-org.github.io/iptv/countries/${countryCode.toLowerCase()}.m3u`
+      );
       const m3uData = await response.text();
       const parsedChannels = parseM3U(m3uData);
       setChannels(parsedChannels);
@@ -44,16 +51,46 @@ const Country = () => {
     }
   };
 
+  const fetchEpgData = async (channelId) => {
+    setEpgLoading(true);
+    try {
+      const response = await fetch(
+        `https://raw.githubusercontent.com/iptv-org/epg/master/channels/${channelId}.json`
+      );
+      const data = await response.json();
+      setEpgData(data.programs);
+      setEpgLoading(false);
+      if (data.programs.length > 0) {
+        setShowChannelModal(true);
+      } else {
+        setSelectedChannel(null); // Reset selected channel if no EPG data
+      }
+    } catch (error) {
+      console.error("Error fetching EPG data:", error);
+      setEpgLoading(false);
+      setSelectedChannel(null); // Reset selected channel on error
+    }
+  };
+
   const parseM3U = (data) => {
-    const lines = data.split('\n');
+    const lines = data.split("\n");
     const channels = [];
     let currentChannel = {};
 
     lines.forEach((line) => {
-      if (line.startsWith('#EXTINF:')) {
-        const info = line.split(',');
+      if (line.startsWith("#EXTINF:")) {
+        const info = line.split(",");
         currentChannel.name = info[1];
-      } else if (line.startsWith('http')) {
+        const attrs = info[0].split(" ");
+        attrs.forEach((attr) => {
+          if (attr.startsWith("tvg-logo=")) {
+            currentChannel.logo = attr.split("=")[1].replace(/"/g, "");
+          }
+          if (attr.startsWith("tvg-id=")) {
+            currentChannel.id = attr.split("=")[1].replace(/"/g, "");
+          }
+        });
+      } else if (line.startsWith("http")) {
         currentChannel.url = line;
         channels.push(currentChannel);
         currentChannel = {};
@@ -70,6 +107,7 @@ const Country = () => {
 
   const handleChannelClick = (channel) => {
     setSelectedChannel(channel);
+    fetchEpgData(channel.id);
   };
 
   useEffect(() => {
@@ -98,28 +136,32 @@ const Country = () => {
   }
 
   return (
-    <div style={{ padding: '20px' }}>
+    <div style={{ padding: "20px" }}>
       <h2>Affichage des chaines par pays</h2>
       <List
         bordered
         dataSource={countries}
-        renderItem={country => (
-          <List.Item 
-            key={country.code} 
-            style={{ display: 'flex', alignItems: 'flex-start', justifyContent:'flex-start', cursor: 'pointer' }} 
+        renderItem={(country) => (
+          <List.Item
+            key={country.code}
+            style={{
+              display: "flex",
+              alignItems: "flex-start",
+              justifyContent: "flex-start",
+              cursor: "pointer",
+            }}
             onClick={() => handleCountryClick(country)}
           >
             <Avatar icon={country.flag} />
-            <div style={{ marginLeft: '10px' }}>
+            <div style={{ marginLeft: "10px" }}>
               <strong>{country.name}</strong> ({country.code})
-
             </div>
           </List.Item>
         )}
       />
 
       <Modal
-        title={selectedCountry ? `Chaînes de ${selectedCountry.name}` : ''}
+        title={selectedCountry ? `Chaînes de ${selectedCountry.name}` : ""}
         visible={!!selectedCountry}
         onCancel={() => setSelectedCountry(null)}
         footer={null}
@@ -130,12 +172,15 @@ const Country = () => {
           <List
             bordered
             dataSource={channels}
-            renderItem={channel => (
-              <List.Item 
+            renderItem={(channel) => (
+              <List.Item
                 key={channel.url}
                 onClick={() => handleChannelClick(channel)}
-                style={{ cursor: 'pointer' }}
+                style={{ cursor: "pointer" }}
               >
+                {channel.logo && (
+                  <Avatar src={channel.logo} style={{ marginRight: "10px" }} />
+                )}
                 {channel.name}
               </List.Item>
             )}
@@ -144,13 +189,36 @@ const Country = () => {
       </Modal>
 
       <Modal
-        title={selectedChannel ? `Lecture de ${selectedChannel.name}` : ''}
-        visible={!!selectedChannel}
-        onCancel={() => setSelectedChannel(null)}
+        title={selectedChannel ? `Lecture de ${selectedChannel.name}` : ""}
+        visible={showChannelModal}
+        onCancel={() => {
+          setSelectedChannel(null);
+          setShowChannelModal(false);
+        }}
         footer={null}
       >
         {selectedChannel && (
-          <video ref={videoRef} controls style={{ width: '100%' }} />
+          <video ref={videoRef} controls style={{ width: "100%" }} />
+        )}
+        {epgLoading ? (
+          <Spin tip="Loading EPG..." />
+        ) : (
+          <List
+            bordered
+            dataSource={epgData}
+            renderItem={(program) => (
+              <List.Item>
+                <div>
+                  <strong>{program.title}</strong>
+                  <p>{program.description}</p>
+                  <p>
+                    {new Date(program.start).toLocaleString()} -{" "}
+                    {new Date(program.stop).toLocaleString()}
+                  </p>
+                </div>
+              </List.Item>
+            )}
+          />
         )}
       </Modal>
     </div>
