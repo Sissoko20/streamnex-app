@@ -17,7 +17,7 @@ import Country from "./Components/Country";
 import LiveTV from "./Components/LiveTV";
 import Radio from "./Components/Radio";
 import Category from "./Components/Category";
-import Movies from "./Components/Movies";
+import Movies from "./Components/Movies";  // Assure-toi d'importer le composant Movies
 import TvShows from "./Components/TvShows";
 import History from "./Components/History";
 import Setting from "./Components/Settings";
@@ -41,7 +41,7 @@ const App = () => {
       case "4":
         return <LiveTV />;
       case "5":
-        return <Movies />;
+        return <Movies />;  // Assure-toi que le composant Movies est rendu ici
       case "6":
         return <TvShows />;
       case "7":
