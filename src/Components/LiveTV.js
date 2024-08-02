@@ -1,27 +1,103 @@
-import React, { useState } from 'react';
-import { SearchOutlined, ShopTwoTone } from '@ant-design/icons';
+// src/components/LiveTV.js
+import React, { useState, useEffect, useRef } from 'react';
+import 'video.js/dist/video-js.css';
+import videojs from 'video.js';
+import { Card, Row, Col, message, Spin } from 'antd';
+import 'antd/dist/reset.css'; // Assurez-vous d'importer le style d'Ant Design
+import { channels } from '../dataChannels/channels'; // Importer les chaînes
 
-import { Button, Flex, Tooltip } from 'antd';
-function LiveTV(){
+const { Meta } = Card;
 
-const [position, setposition]=useState('end')
+const LiveTV = () => {
+  const playerRef = useRef(null);
+  const [player, setPlayer] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-    return(
-        <div style={{
-            
-            display:'flex',
-            flexDirection:'row',
-            justifyContent:'space-around',
+  useEffect(() => {
+    if (playerRef.current && !player) {
+      const videoPlayer = videojs(playerRef.current, {
+        controls: true,
+        autoplay: false,
+        preload: 'auto'
+      });
+      setPlayer(videoPlayer);
+    }
 
+    return () => {
+      if (player) {
+        player.dispose();
+      }
+    };
+  }, [player]);
 
-        }}>
-       <ShopTwoTone />
-       <Button ghost style={{
-        border:'none'
-       }}>LiveTV</Button>
-          
-        </div>
-    )
-}
+  // Vérifie la disponibilité d'une URL
+  const checkUrlAvailability = async (url) => {
+    try {
+      const response = await fetch(url, { method: 'HEAD' });
+      return response.ok;
+    } catch (error) {
+      console.error('Error checking URL availability:', error);
+      return false;
+    }
+  };
+
+  const handleChannelChange = async (url) => {
+    if (player) {
+      if (await checkUrlAvailability(url)) {
+        try {
+          player.src({ src: url, type: 'application/x-mpegURL' });
+          await player.play();
+        } catch (error) {
+          message.error('Erreur lors de la lecture de la chaîne. Veuillez réessayer.');
+          console.error('Error playing the channel:', error);
+        }
+      } else {
+        message.error('Chaîne non disponible.');
+      }
+    }
+  };
+
+  const playFirstAvailableChannel = async () => {
+    setLoading(true);
+    for (let channel of channels) {
+      if (await checkUrlAvailability(channel.url)) {
+        handleChannelChange(channel.url);
+        setLoading(false);
+        return;
+      }
+    }
+    setLoading(false);
+    message.error('Aucune chaîne disponible.');
+  };
+
+  return (
+    <div onClick={playFirstAvailableChannel}>
+      <div>
+        <video ref={playerRef} className="video-js vjs-default-skin" controls />
+      </div>
+      <div>
+        <h3>Channels</h3>
+        {loading ? (
+          <Spin tip="Chargement des chaînes..." />
+        ) : (
+          <Row gutter={16}>
+            {channels.map((channel) => (
+              <Col span={8} key={channel.name}>
+                <Card
+                  hoverable
+                  cover={<img alt={channel.name} src={channel.image} />}
+                  onClick={() => handleChannelChange(channel.url)}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <Meta title={channel.name} description={channel.description} />
+                </Card>
+              </Col>
+            ))}
+          </Row>
+        )}
+      </div>
+    </div>
+  );
+};
 
 export default LiveTV;

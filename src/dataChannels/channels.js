@@ -1,4 +1,4 @@
-[
+ export const channels=[
     {
         "name": "20 Minutes TV",
         "url": "https://lives.digiteka.com/stream/86d3e867-a272-496b-8412-f59aa0104771/index.m3u8"

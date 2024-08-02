@@ -109,22 +109,8 @@ const App = () => {
             >
               Search
             </Menu.Item>
-            <Menu.Item key="2" icon={<GlobalOutlined />} style={menuItemStyle}>
-              Country
-            </Menu.Item>
-            <Menu.Item
-              key="3"
-              icon={
-                <AppstoreOutlined
-                  style={{
-                    borderBottom: "2px solid white",
-                  }}
-                />
-              }
-              style={menuItemStyle}
-            >
-              Category
-            </Menu.Item>
+           
+            
             <Menu.Item
               key="4"
               icon={<VideoCameraOutlined />}
