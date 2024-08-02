@@ -14,4 +14,28 @@
     width: 100%;
     height: 100%;
   }
+ 
+  
+  .channel-list {
+    margin-top: 100px; /* Ajuster selon la hauteur du lecteur vidéo pour que la liste des chaînes ne commence pas sous le lecteur */
+  }
+
+/* Feuille de style intégrée #28 | http://localhost:3000/ */
+
+.video-player {
+    /* position: fixed; */
+    /* left: 10px; */
+    /* width: calc(100% - 20px); */
+    position: sticky;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    flex-wrap: wrap;
+    z-index: 500; /* S'assurer que le lecteur est au-dessus des autres contenus */
+    background-color: white; /* Facultatif : ajouter un arrière-plan pour le lecteur */
+    padding: 10px; /* Facultatif : ajouter un padding pour le lecteur */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Facultatif : ajouter une ombre pour le lecteur */
+  
+  }
+  
   

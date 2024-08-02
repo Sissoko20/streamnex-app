@@ -5,7 +5,7 @@ import videojs from 'video.js';
 import { Row, Col, message, Spin } from 'antd';
 import 'antd/dist/reset.css'; // Assurez-vous d'importer le style d'Ant Design
 import { channels } from '../dataChannels/channels'; // Importer les chaînes
-
+import '../Components/LiveTV.css'
 const ChannelCard = React.lazy(() => import('./ChannelCard'));
 
 const LiveTV = () => {
@@ -59,11 +59,11 @@ const LiveTV = () => {
 
   return (
     <div>
-      <div>
+      <div className='video-player'>
         <video ref={playerRef} className="video-js vjs-default-skin" controls />
       </div>
-      <div>
-        <h3>Channels</h3>
+      <div className='channel-list'>
+        <h3>Liste des chaines</h3>
         {loading ? (
           <Spin tip="Chargement des chaînes..." />
         ) : (
