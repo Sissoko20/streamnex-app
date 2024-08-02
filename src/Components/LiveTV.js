@@ -57,21 +57,8 @@ const LiveTV = () => {
     }
   };
 
-  const playFirstAvailableChannel = async () => {
-    setLoading(true);
-    for (let channel of channels) {
-      if (await checkUrlAvailability(channel.url)) {
-        handleChannelChange(channel.url);
-        setLoading(false);
-        return;
-      }
-    }
-    setLoading(false);
-    message.error('Aucune chaîne disponible.');
-  };
-
   return (
-    <div onClick={playFirstAvailableChannel}>
+    <div>
       <div>
         <video ref={playerRef} className="video-js vjs-default-skin" controls />
       </div>
@@ -84,7 +71,7 @@ const LiveTV = () => {
             <Suspense fallback={<Spin tip="Chargement des chaînes..." />}>
               {channels.map((channel) => (
                 <Col span={8} key={channel.name}>
-                  <ChannelCard channel={channel} onClick={handleChannelChange} />
+                  <ChannelCard channel={channel} onClick={() => handleChannelChange(channel.url)} />
                 </Col>
               ))}
             </Suspense>

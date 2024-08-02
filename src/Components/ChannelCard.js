@@ -1,20 +1,15 @@
-// src/components/ChannelCard.js
 import React from 'react';
 import { Card } from 'antd';
 
-const { Meta } = Card;
-
-const ChannelCard = React.memo(({ channel, onClick }) => {
-  return (
-    <Card
-      hoverable
-      cover={<img alt={channel.name} src={channel.image} />}
-      onClick={() => onClick(channel.url)}
-      style={{ cursor: 'pointer' }}
-    >
-      <Meta title={channel.name} description={channel.description} />
-    </Card>
-  );
-});
+const ChannelCard = ({ channel, onClick }) => (
+  <Card
+    hoverable
+    onClick={onClick}
+    style={{ marginBottom: '16px' }}
+    cover={<img alt={channel.name} src={channel.logo || 'placeholder-image.png'} />}
+  >
+    <Card.Meta title={channel.name} />
+  </Card>
+);
 
 export default ChannelCard;

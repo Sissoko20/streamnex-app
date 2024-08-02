@@ -1,4 +1,5 @@
- export const channels=[
+// src/dataChannels/channels.js
+export const channels = [
     {
         "name": "20 Minutes TV",
         "url": "https://lives.digiteka.com/stream/86d3e867-a272-496b-8412-f59aa0104771/index.m3u8"
@@ -80,55 +81,19 @@
         "url": "https://nrj12.nrjaudio.fm/hls/live/2038374/nrj_12/master.m3u8"
     },
     {
-        "name": "RMC D\u00e9couverte (1080p)",
+        "name": "RMC Découverte (1080p)",
         "url": "https://d2mt8for1pddy4.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-6uronj7gzvy4j/index.m3u8"
     },
     {
-        "name": "T\u00e9l\u00e9nantes (480p)",
-        "url": "https://raw.githubusercontent.com/azgaresncf/strm2hls/main/streams/Telenantes.m3u8"
-    },
-    {
-        "name": "TF1 (720p) [Geo-blocked]",
-        "url": "https://raw.githubusercontent.com/Paradise-91/ParaTV/main/streams/tf1plus/tf1.m3u8"
-    },
-    {
-        "name": "TF1 S\u00e9ries Films (720p) [Geo-blocked]",
-        "url": "https://raw.githubusercontent.com/Paradise-91/ParaTV/main/streams/tf1plus/tf1sf.m3u8"
-    },
-    {
-        "name": "TFX (720p) [Geo-blocked]",
-        "url": "https://raw.githubusercontent.com/Paradise-91/ParaTV/main/streams/tf1plus/tfx.m3u8"
-    },
-    {
-        "name": "TMC (720p) [Geo-blocked]",
-        "url": "https://raw.githubusercontent.com/Paradise-91/ParaTV/main/streams/tf1plus/tmc.m3u8"
-    },
-    {
-        "name": "TV5Monde Info (1080p) [Geo-blocked]",
-        "url": "https://ott.tv5monde.com/Content/HLS/Live/channel(info)/variant.m3u8"
-    },
-    {
-        "name": "Vi\u00e0Mat\u00e9l\u00e9 (1080p)",
-        "url": "https://5dd226f8f01e8.streamlock.net/via-matele-live/matelelive_1080/playlist.m3u8"
-    },
-    {
-        "name": "vi\u00e0MoselleTV (720p) [Not 24/7]",
-        "url": "https://live.creacast.com/mirabelletv/smil:mirabelletv.smil/playlist.m3u8"
-    },
-    {
-        "name": "vi\u00e0Occitanie (540p) [Not 24/7]",
-        "url": "https://streamer01.myvideoplace.tv/streamer02/hls/MDS_VIA_PAD_301117.m3u8"
-    },
-    {
-        "name": "Vosges T\u00e9l\u00e9vision (576p) [Not 24/7]",
-        "url": "https://vosgestv.live-kd.com/live/vosgestv/vosgestv/playlist.m3u8"
-    },
-    {
-        "name": "XilamTV (1080p)",
-        "url": "https://xilam-animation-1-fr.samsung.wurl.tv/playlist.m3u8"
-    },
-    {
         "name": "RMC Story",
-        "url": "https://d36bxc1bknkxrk.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-3ewcp19zjaxpt/index.m3u8"
+        "url": "https://d2mt8for1pddy4.cloudfront.net/v1/master/3915debf56a89d85581e016b6b31a8e618932032/cc-vpt1tn7wyfdq7/index.m3u8"
+    },
+    {
+        "name": "TF1 (720p)",
+        "url": "https://m3u.globaliptv.tv/TF1.m3u8"
+    },
+    {
+        "name": "TPMP (1080p)",
+        "url": "https://m3u.globaliptv.tv/TPMP.m3u8"
     }
-]
+];

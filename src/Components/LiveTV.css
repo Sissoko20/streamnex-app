@@ -1,0 +1,17 @@
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%; /* Ratio 16:9 */
+    height: 0;
+    overflow: hidden;
+    max-width: 100%;
+    background: black;
+  }
+  
+  .video-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
