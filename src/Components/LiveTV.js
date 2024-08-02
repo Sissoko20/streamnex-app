@@ -1,11 +1,10 @@
-// src/components/LiveTV.js
 import React, { useState, useEffect, useRef, Suspense } from 'react';
 import 'video.js/dist/video-js.css';
 import videojs from 'video.js';
 import { Row, Col, message, Spin } from 'antd';
 import 'antd/dist/reset.css'; // Assurez-vous d'importer le style d'Ant Design
 import { channels } from '../dataChannels/channels'; // Importer les chaînes
-import '../Components/LiveTV.css'
+import '../Components/LiveTV.css';
 const ChannelCard = React.lazy(() => import('./ChannelCard'));
 
 const LiveTV = () => {
@@ -67,10 +66,10 @@ const LiveTV = () => {
         {loading ? (
           <Spin tip="Chargement des chaînes..." />
         ) : (
-          <Row gutter={16}>
+          <Row gutter={[16, 16]}>
             <Suspense fallback={<Spin tip="Chargement des chaînes..." />}>
               {channels.map((channel) => (
-                <Col span={8} key={channel.name}>
+                <Col xs={24} sm={12} md={8} key={channel.name}>
                   <ChannelCard channel={channel} onClick={() => handleChannelChange(channel.url)} />
                 </Col>
               ))}

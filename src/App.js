@@ -17,7 +17,7 @@ import Country from "./Components/Country";
 import LiveTV from "./Components/LiveTV";
 import Radio from "./Components/Radio";
 import Category from "./Components/Category";
-import Movies from "./Components/Movies";  // Assure-toi d'importer le composant Movies
+import Movies from "./Components/Movies"; // Assure-toi d'importer le composant Movies
 import TvShows from "./Components/TvShows";
 import History from "./Components/History";
 import Setting from "./Components/Settings";
@@ -58,7 +58,7 @@ const App = () => {
       case "4":
         return <LiveTV />;
       case "5":
-        return <Movies />;  // Assure-toi que le composant Movies est rendu ici
+        return <Movies movies={moviesData} />; // Assure-toi de passer les données de films ici
       case "6":
         return <TvShows />;
       case "7":
@@ -75,6 +75,12 @@ const App = () => {
   const menuItemStyle = {
     background: "transparent",
   };
+
+  const moviesData = [
+    { id: 1, title: "Movie 1", description: "Description 1" },
+    { id: 2, title: "Movie 2", description: "Description 2" },
+    // Ajoutez plus de films ici
+  ];
 
   return (
     <>
