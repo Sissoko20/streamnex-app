@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Layout, Menu, Button } from "antd";
 import {
   SearchOutlined,
@@ -29,6 +29,23 @@ const { Sider, Content } = Layout;
 const App = () => {
   const [selectedKey, setSelectedKey] = useState("5");
   const [collapsed, setCollapsed] = useState(false);
+
+  const handleResize = () => {
+    if (window.innerWidth <= 768) {
+      setCollapsed(true);
+    } else {
+      setCollapsed(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    handleResize(); // Initial check
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const renderContent = () => {
     switch (selectedKey) {
@@ -68,6 +85,7 @@ const App = () => {
           collapsible
           collapsed={collapsed}
           onCollapse={() => setCollapsed(!collapsed)}
+          className={window.innerWidth <= 768 ? "hide-sider" : ""}
           style={{
             overflow: "auto",
             height: "100vh",
