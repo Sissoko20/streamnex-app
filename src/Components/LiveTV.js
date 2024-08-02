@@ -1,12 +1,12 @@
 // src/components/LiveTV.js
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Suspense } from 'react';
 import 'video.js/dist/video-js.css';
 import videojs from 'video.js';
-import { Card, Row, Col, message, Spin } from 'antd';
+import { Row, Col, message, Spin } from 'antd';
 import 'antd/dist/reset.css'; // Assurez-vous d'importer le style d'Ant Design
 import { channels } from '../dataChannels/channels'; // Importer les chaînes
 
-const { Meta } = Card;
+const ChannelCard = React.lazy(() => import('./ChannelCard'));
 
 const LiveTV = () => {
   const playerRef = useRef(null);
@@ -81,18 +81,13 @@ const LiveTV = () => {
           <Spin tip="Chargement des chaînes..." />
         ) : (
           <Row gutter={16}>
-            {channels.map((channel) => (
-              <Col span={8} key={channel.name}>
-                <Card
-                  hoverable
-                  cover={<img alt={channel.name} src={channel.image} />}
-                  onClick={() => handleChannelChange(channel.url)}
-                  style={{ cursor: 'pointer' }}
-                >
-                  <Meta title={channel.name} description={channel.description} />
-                </Card>
-              </Col>
-            ))}
+            <Suspense fallback={<Spin tip="Chargement des chaînes..." />}>
+              {channels.map((channel) => (
+                <Col span={8} key={channel.name}>
+                  <ChannelCard channel={channel} onClick={handleChannelChange} />
+                </Col>
+              ))}
+            </Suspense>
           </Row>
         )}
       </div>
