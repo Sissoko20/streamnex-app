@@ -91,6 +91,6 @@
 
 /* Feuille de style intégrée #27 | http://localhost:3000/ */
 
-video-js vjs-default-skin {
-  /* position: relative; */
+.video-js .vjs-default-skin {
+  position: unset!important
 }
