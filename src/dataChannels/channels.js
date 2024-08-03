@@ -180,7 +180,53 @@ export const channels = [
         {
             "name": "Passion Novelas",
             "url": "https://d219tvyafu2vka.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-csm4hzxgjueax/index.m3u8"
-        }
+        },
+
+            {
+                "name": "BBC Drama",
+                "url": "https://bbceu-bbcdrama-1-fr.samsung.wurl.tv/playlist.m3u8"
+            },
+            {
+                "name": "Bloomberg TV+ UHD (2160p)",
+                "url": "https://bloomberg-bloombergtv-1-fr.samsung.wurl.tv/manifest/playlist.m3u8"
+            },
+            {
+                "name": "Caillou",
+                "url": "https://dhx-caillou-2-fr.samsung.wurl.tv/playlist.m3u8"
+            },
+            {
+                "name": "Euronews Fran\u00e7ais (720p)",
+                "url": "https://euronews-euronews-french-3-us.plex.wurl.tv/playlist.m3u8"
+            },
+            {
+                "name": "Euronews Fran\u00e7ais (720p)",
+                "url": "https://rakuten-euronews-2-fr.samsung.wurl.tv/manifest/playlist.m3u8"
+            },
+            {
+                "name": "Rakuten Action Movies (720p)",
+                "url": "https://rakuten-actionmovies-7-fr.samsung.wurl.tv/playlist.m3u8"
+            },
+            {
+                "name": "Rakuten Comedy Movies (720p)",
+                "url": "https://rakuten-comedymovies-7-fr.samsung.wurl.tv/playlist.m3u8"
+            },
+            {
+                "name": "Rakuten Family (720p)",
+                "url": "https://rakuten-family-7-fr.samsung.wurl.tv/playlist.m3u8"
+            },
+            {
+                "name": "Rakuten Spotlight (720p)",
+                "url": "https://rakuten-spotlight-7-fr.samsung.wurl.tv/playlist.m3u8"
+            },
+            {
+                "name": "TNTV (1080p)",
+                "url": "https://tntv-samsung-fr.amagi.tv/playlist.m3u8"
+            },
+            {
+                "name": "Wildside TV (720p)",
+                "url": "https://versatile-wildsidetv-1-fr.samsung.wurl.tv/playlist.m3u8"
+            }
+        
     
 
     
