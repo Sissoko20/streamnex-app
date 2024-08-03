@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useRef, Suspense } from "react";
 import "video.js/dist/video-js.css";
 import videojs from "video.js";
-import { Row, Col, message, Spin, Modal, Button } from "antd";
+import { Row, Col, message, Spin, Card, Modal, Button } from "antd";
 import "antd/dist/reset.css"; // Assurez-vous d'importer le style d'Ant Design
 import { channels } from "../dataChannels/channels"; // Importer les chaînes
 import "../Components/LiveTV.css";
-
 const ChannelCard = React.lazy(() => import("./ChannelCard"));
 
 const LiveTV = () => {
@@ -59,11 +58,7 @@ const LiveTV = () => {
 
   const handleChannelChange = async (channel) => {
     const { url, name } = channel;
-    setLoading(true);
-    const isAvailable = await checkUrlAvailability(url);
-    setLoading(false);
-
-    if (isAvailable) {
+    if (await checkUrlAvailability(url)) {
       setCurrentChannelUrl(url);
       setCurrentChannelName(name);
       setIsModalVisible(true);
