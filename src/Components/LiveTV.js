@@ -65,7 +65,9 @@ const LiveTV = () => {
           ref={playerRef}
           className="video-js vjs-default-skin"
           controls
-          style={{}}
+          style={{
+            position: 'unset'
+          }}
         />
       </div>
       <div className="channel-list">
