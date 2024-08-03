@@ -63,7 +63,7 @@ const LiveTV = () => {
 
   return (
     <div>
-      <Card title="Lecteur Vidéo" style={{ width: '100%' }}>
+      <Card className="video-player-card" title="Lecteur Vidéo" style={{ width: '100%', }}>
         <div className="video-player">
           <video
             ref={playerRef}
