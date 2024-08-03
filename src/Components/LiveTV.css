@@ -72,9 +72,7 @@
       background-position: center center;
     }
   }
-  video {
-    width:100%;
-  }
+  
   @media (max-width: 600px) {
     .video-container {
         width: 100vw;

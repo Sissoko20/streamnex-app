@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, Suspense } from "react";
 import "video.js/dist/video-js.css";
 import videojs from "video.js";
-import { Row, Col, message, Spin } from "antd";
+import { Row, Col, message, Spin, Card } from "antd";
 import "antd/dist/reset.css"; // Assurez-vous d'importer le style d'Ant Design
 import { channels } from "../dataChannels/channels"; // Importer les chaînes
 import "../Components/LiveTV.css";
@@ -60,18 +60,18 @@ const LiveTV = () => {
 
   return (
     <div>
-      <div className="video-player">
-        <video
-          ref={playerRef}
-          className="video-js vjs-default-skin"
-          controls
-          style={{
-            position: 'unset'
-          }}
-        />
-      </div>
+      <Card title="Lecteur Vidéo" style={{ width: '100%' }}>
+        <div className="video-player">
+          <video
+            ref={playerRef}
+            className="video-js vjs-default-skin"
+            controls
+            style={{ width: '100%', height: 'auto' }}
+          />
+        </div>
+      </Card>
       <div className="channel-list">
-        <h3>Liste des chaines</h3>
+        <h3>Liste des chaînes</h3>
         {loading ? (
           <Spin tip="Chargement des chaînes..." />
         ) : (
