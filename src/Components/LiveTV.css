@@ -18,6 +18,7 @@
  
   
   .channel-list {
+    margin-top:20px;
     margin-bottom: 2000px; /* Ajuster selon la hauteur du lecteur vidéo pour que la liste des chaînes ne commence pas sous le lecteur */
   }
 
