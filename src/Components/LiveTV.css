@@ -1,3 +1,4 @@
+
 .video-container {
     position: relative;
     padding-bottom: 56.25%; /* Ratio 16:9 */
@@ -23,9 +24,7 @@
 /* Feuille de style intégrée #28 | http://localhost:3000/ */
 
 .video-player {
-    /* position: fixed; */
-    /* left: 10px; */
-    /* width: calc(100% - 20px); */
+  
     position: sticky;
     display: flex;
     justify-content: center;
@@ -36,7 +35,61 @@
     background-color: white; /* Facultatif : ajouter un arrière-plan pour le lecteur */
     padding: 10px; /* Facultatif : ajouter un padding pour le lecteur */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Facultatif : ajouter une ombre pour le lecteur */
-  
+    padding-bottom: 56.25%; /* Ratio 16:9 */
+    height: 0;
+    overflow: hidden;
+    max-width: 100%;
+    background: black;
   }
+  @media screen and (max-width: 42.5em) {
+    .controls {
+      height: auto;
+    }
   
+    .controls > * {
+      display: block;
+      width: 16.6667%;
+      margin-left: 0;
+      height: 2.5rem;
+      margin-top: 2.5rem;
+    }
   
+    .controls .progress {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      float: none;
+      margin-top: 0;
+    }
+  
+    .controls .progress progress {
+      width: 98%;
+      margin: 0 auto;
+    }
+  
+    .controls button {
+      background-position: center center;
+    }
+  }
+  video {
+    width:100%;
+  }
+  @media (max-width: 600px) {
+    .video-container {
+        width: 100vw;
+        height: 100vh;
+    }
+}
+.video-container {
+  position: relative;
+  padding-top: 56.25%; /* 16:9 Aspect Ratio */
+  height: 0;
+  overflow: hidden;
+}
+
+
+/* Feuille de style intégrée #27 | http://localhost:3000/ */
+
+.video-js {
+  /* position: relative; */
+}
