@@ -134,13 +134,7 @@ const App = () => {
               Search
             </Menu.Item>
 
-            <Menu.Item
-              key="2"
-              icon={<GlobalOutlined/>}
-              style={menuItemStyle}
-            >
-              Country
-            </Menu.Item>
+            
            
             
             <Menu.Item
@@ -163,13 +157,7 @@ const App = () => {
             >
               Movies
             </Menu.Item>
-            <Menu.Item
-              key="6"
-              icon={<VideoCameraOutlined />}
-              style={menuItemStyle}
-            >
-              TvShows
-            </Menu.Item>
+           
             <Menu.Item key="7" icon={<AudioOutlined />} style={menuItemStyle}>
               Radio
             </Menu.Item>
