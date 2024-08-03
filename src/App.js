@@ -133,6 +133,14 @@ const App = () => {
             >
               Search
             </Menu.Item>
+
+            <Menu.Item
+              key="2"
+              icon={<GlobalOutlined/>}
+              style={menuItemStyle}
+            >
+              Country
+            </Menu.Item>
            
             
             <Menu.Item

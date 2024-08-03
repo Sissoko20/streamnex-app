@@ -1,45 +1,9 @@
-
-
-  
-  .channel-list {
-    margin-top:20px;
-     /* Ajuster selon la hauteur du lecteur vidéo pour que la liste des chaînes ne commence pas sous le lecteur */
-  }
-
-/* Feuille de style intégrée #28 | http://localhost:3000/ */
-
-
-  .video-player-card{
-    
-    position: -webkit-sticky;
-  position: sticky;
-  top: 0;
-  padding: 5px;
-  z-index: 1000;
-  background-color: #100f25;
-  border: 2px solid #393e3a;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0);
-  height: 250px;
-  }
-  
-
-/* Feuille de style intégrée #19 | http://localhost:3000/ */
-
-:where(.css-dev-only-do-not-override-1uq9j6g).ant-card .ant-card-head-title {
-  color: azure;
+.channel-list {
+  margin-top: 20px;
 }
 
 
- 
- 
- 
 
-
-/* Feuille de style intégrée #27 | http://localhost:3000/ */
-
-
-
-
-
-
+.ant-card .ant-card-head-title {
+  color: azure;
+}

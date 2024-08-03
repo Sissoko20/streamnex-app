@@ -6,7 +6,7 @@ const ChannelCard = ({ channel, onClick }) => (
     hoverable
     onClick={onClick}
     style={{ marginBottom: '16px' }}
-    cover={<img alt={channel.name} src={channel.logo || 'placeholder-image.png'} />}
+    cover={<img alt={channel.name} src={channel.logo || '/placeholder-image.png'} />}
   >
     <Card.Meta title={channel.name} />
   </Card>
