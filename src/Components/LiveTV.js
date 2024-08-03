@@ -18,6 +18,9 @@ const LiveTV = () => {
         controls: true,
         autoplay: false,
         preload: "auto",
+        controlBar: {
+          volumePanel: { inline: false }
+        }
       });
       setPlayer(videoPlayer);
     }
@@ -64,7 +67,7 @@ const LiveTV = () => {
         <div className="video-player">
           <video
             ref={playerRef}
-            className="video-js vjs-default-skin"
+            className="video-js vjs-default-skin vjs-big-play-centered"
             controls
             style={{ width: '100%', height: 'auto' }}
           />
