@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Layout, Menu, Button } from "antd";
 import {
   SearchOutlined,
@@ -17,14 +17,43 @@ import Country from "./Components/Country";
 import LiveTV from "./Components/LiveTV";
 import Radio from "./Components/Radio";
 import Category from "./Components/Category";
-import Movies from "./Components/Movies"; // Assure-toi d'importer le composant Movies
+import Movies from "./Components/Movies";
 import TvShows from "./Components/TvShows";
 import History from "./Components/History";
 import Setting from "./Components/Settings";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { Analytics } from "@vercel/analytics/react";
+import { FixedSizeList as List } from "react-window";
+import { throttle } from "lodash";
 
 const { Sider, Content } = Layout;
+
+const LazyLoadComponent = ({ children }) => {
+  const ref = useRef();
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(ref.current);
+
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current);
+      }
+    };
+  }, []);
+
+  return <div ref={ref}>{isVisible ? children : null}</div>;
+};
 
 const App = () => {
   const [selectedKey, setSelectedKey] = useState("5");
@@ -38,12 +67,14 @@ const App = () => {
     }
   };
 
+  const throttledHandleResize = throttle(handleResize, 200);
+
   useEffect(() => {
-    window.addEventListener("resize", handleResize);
+    window.addEventListener("resize", throttledHandleResize);
     handleResize(); // Initial check
 
     return () => {
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("resize", throttledHandleResize);
     };
   }, []);
 
@@ -56,9 +87,17 @@ const App = () => {
       case "3":
         return <Category />;
       case "4":
-        return <LiveTV />;
+        return (
+          <LazyLoadComponent>
+            <LiveTV />
+          </LazyLoadComponent>
+        );
       case "5":
-        return <Movies movies={moviesData} />; // Assure-toi de passer les données de films ici
+        return (
+          <LazyLoadComponent>
+            <Movies />
+          </LazyLoadComponent>
+        ); // Assure-toi de passer les données de films ici
       case "6":
         return <TvShows />;
       case "7":
@@ -76,10 +115,43 @@ const App = () => {
     background: "transparent",
   };
 
-  const moviesData = [
-    { id: 1, title: "Movie 1", description: "Description 1" },
-    { id: 2, title: "Movie 2", description: "Description 2" },
-    // Ajoutez plus de films ici
+  const menuItems = [
+    {
+      key: "1",
+      icon: <SearchOutlined style={{ borderBottom: "2px solid white" }} />,
+      label: "Search",
+      style: menuItemStyle,
+    },
+    {
+      key: "4",
+      icon: <VideoCameraOutlined />,
+      label: "LiveTV",
+      style: menuItemStyle,
+    },
+    {
+      key: "5",
+      icon: <PlayCircleOutlined style={{ borderBottom: "2px solid white" }} />,
+      label: "Movies",
+      style: menuItemStyle,
+    },
+    {
+      key: "7",
+      icon: <AudioOutlined />,
+      label: "Radio",
+      style: menuItemStyle,
+    },
+    {
+      key: "8",
+      icon: <HistoryOutlined />,
+      label: "History",
+      style: { ...menuItemStyle, paddingTop: "10vh" },
+    },
+    {
+      key: "9",
+      icon: <SettingOutlined />,
+      label: "Setting",
+      style: menuItemStyle,
+    },
   ];
 
   return (
@@ -119,57 +191,8 @@ const App = () => {
             defaultSelectedKeys={["5"]}
             selectedKeys={[selectedKey]}
             onClick={(e) => setSelectedKey(e.key)}
-          >
-            <Menu.Item
-              key="1"
-              icon={
-                <SearchOutlined
-                  style={{
-                    borderBottom: "2px solid white",
-                  }}
-                />
-              }
-              style={menuItemStyle}
-            >
-              Search
-            </Menu.Item>
-
-            
-           
-            
-            <Menu.Item
-              key="4"
-              icon={<VideoCameraOutlined />}
-              style={menuItemStyle}
-            >
-              LiveTV
-            </Menu.Item>
-            <Menu.Item
-              key="5"
-              icon={
-                <PlayCircleOutlined
-                  style={{
-                    borderBottom: "2px solid white",
-                  }}
-                />
-              }
-              style={menuItemStyle}
-            >
-              Movies
-            </Menu.Item>
-           
-            <Menu.Item key="7" icon={<AudioOutlined />} style={menuItemStyle}>
-              Radio
-            </Menu.Item>
-            <div className="historySettings" style={{ paddingTop: "10vh" }}>
-              <Menu.Item key="8" icon={<HistoryOutlined />} style={menuItemStyle}>
-                History
-              </Menu.Item>
-              <Menu.Item key="9" icon={<SettingOutlined />} style={menuItemStyle}>
-                Setting
-              </Menu.Item>
-            </div>
-          </Menu>
+            items={menuItems} // Utilisez items ici
+          />
         </Sider>
         <Layout style={{ marginLeft: collapsed ? 80 : 200 }}>
           <Content style={{ margin: "24px 16px 0", overflow: "initial" }}>

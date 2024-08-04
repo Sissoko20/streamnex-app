@@ -1,50 +1,51 @@
 import React, { useState, useEffect, useRef, Suspense } from "react";
-import "video.js/dist/video-js.css";
-import videojs from "video.js";
-import { Row, Col, message, Spin, Card, Modal, Button } from "antd";
-import "antd/dist/reset.css"; // Assurez-vous d'importer le style d'Ant Design
-import { channels } from "../dataChannels/channels"; // Importer les chaînes
+import Hls from "hls.js";
+import { Row, Col, message, Spin, Modal, Button } from "antd";
+import "antd/dist/reset.css";
+import { channels } from "../dataChannels/channels";
 import "../Components/LiveTV.css";
+
 const ChannelCard = React.lazy(() => import("./ChannelCard"));
 
 const LiveTV = () => {
-  const playerRef = useRef(null);
-  const [player, setPlayer] = useState(null);
+  const videoRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [currentChannelUrl, setCurrentChannelUrl] = useState("");
   const [currentChannelName, setCurrentChannelName] = useState("");
 
   useEffect(() => {
-    if (playerRef.current && !player) {
-      const videoPlayer = videojs(playerRef.current, {
-        controls: true,
-        autoplay: false,
-        preload: "auto",
-        controlBar: {
-          volumePanel: { inline: false }
-        }
-      });
-      setPlayer(videoPlayer);
-    }
+    if (videoRef.current && currentChannelUrl) {
+      const video = videoRef.current;
+      let hls;
 
-    return () => {
-      if (player) {
-        player.dispose();
+      if (Hls.isSupported()) {
+        hls = new Hls();
+        hls.loadSource(currentChannelUrl);
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MANIFEST_PARSED, () => {
+          video.play().catch(error => {
+            message.error("Erreur lors de la lecture de la chaîne. Veuillez réessayer.");
+            console.error("Error playing the channel:", error);
+          });
+        });
+      } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = currentChannelUrl;
+        video.addEventListener('loadedmetadata', () => {
+          video.play().catch(error => {
+            message.error("Erreur lors de la lecture de la chaîne. Veuillez réessayer.");
+            console.error("Error playing the channel:", error);
+          });
+        });
       }
-    };
-  }, [player]);
 
-  useEffect(() => {
-    if (player && isModalVisible) {
-      console.log("Setting player source:", currentChannelUrl);
-      player.src({ src: currentChannelUrl, type: "application/x-mpegURL" });
-      player.play().catch(error => {
-        message.error("Erreur lors de la lecture de la chaîne. Veuillez réessayer.");
-        console.error("Error playing the channel:", error);
-      });
+      return () => {
+        if (hls) {
+          hls.destroy();
+        }
+      };
     }
-  }, [player, isModalVisible, currentChannelUrl]);
+  }, [currentChannelUrl]);
 
   const checkUrlAvailability = async (url) => {
     try {
@@ -69,8 +70,9 @@ const LiveTV = () => {
 
   const handleModalClose = () => {
     setIsModalVisible(false);
-    if (player) {
-      player.pause();
+    const video = videoRef.current;
+    if (video) {
+      video.pause();
     }
   };
 
@@ -78,7 +80,7 @@ const LiveTV = () => {
     <div>
       <Modal
         title={currentChannelName || "Lecteur Vidéo"}
-        visible={isModalVisible}
+        open={isModalVisible}
         onCancel={handleModalClose}
         footer={[
           <Button key="close" onClick={handleModalClose}>
@@ -89,13 +91,13 @@ const LiveTV = () => {
       >
         <div className="video-player">
           <video
-            ref={playerRef}
-            className="video-js vjs-default-skin vjs-big-play-centered"
+            ref={videoRef}
             controls
             style={{ width: '100%', height: 'auto' }}
           />
         </div>
       </Modal>
+      
       <div className="channel-list">
         <h3>Liste des chaînes</h3>
         {loading ? (

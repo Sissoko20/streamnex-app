@@ -186,7 +186,7 @@ const Country = () => {
 
       <Modal
         title={selectedChannel ? `Lecture de ${selectedChannel.name}` : ""}
-        visible={!!selectedChannel}
+        open={!!selectedChannel}
         onCancel={() => setSelectedChannel(null)}
         footer={null}
       >
