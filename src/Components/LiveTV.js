@@ -19,25 +19,42 @@ const LiveTV = () => {
       const video = videoRef.current;
       let hls;
 
-      if (Hls.isSupported()) {
-        hls = new Hls();
-        hls.loadSource(currentChannelUrl);
-        hls.attachMedia(video);
-        hls.on(Hls.Events.MANIFEST_PARSED, () => {
-          video.play().catch(error => {
-            message.error("Erreur lors de la lecture de la chaîne. Veuillez réessayer.");
-            console.error("Error playing the channel:", error);
+      const setupHls = () => {
+        if (Hls.isSupported()) {
+          hls = new Hls();
+
+          hls.loadSource(currentChannelUrl);
+          hls.attachMedia(video);
+
+          hls.on(Hls.Events.MANIFEST_PARSED, () => {
+            video.play().catch(error => {
+              message.error("Erreur lors de la lecture de la chaîne. Veuillez réessayer.");
+              console.error("Error playing the channel:", error);
+            });
           });
-        });
-      } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-        video.src = currentChannelUrl;
-        video.addEventListener('loadedmetadata', () => {
-          video.play().catch(error => {
-            message.error("Erreur lors de la lecture de la chaîne. Veuillez réessayer.");
-            console.error("Error playing the channel:", error);
+
+          hls.on(Hls.Events.ERROR, (event, data) => {
+            if (data.fatal === Hls.ErrorTypes.NETWORK_ERROR) {
+              message.error("Erreur réseau lors de la lecture de la chaîne.");
+            } else if (data.fatal === Hls.ErrorTypes.MEDIA_ERROR) {
+              message.error("Erreur média lors de la lecture de la chaîne.");
+            } else if (data.fatal === Hls.ErrorTypes.OTHER_ERROR) {
+              message.error("Erreur inconnue lors de la lecture de la chaîne.");
+            }
+            console.error("HLS Error:", data);
           });
-        });
-      }
+        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+          video.src = currentChannelUrl;
+          video.addEventListener('loadedmetadata', () => {
+            video.play().catch(error => {
+              message.error("Erreur lors de la lecture de la chaîne. Veuillez réessayer.");
+              console.error("Error playing the channel:", error);
+            });
+          });
+        }
+      };
+
+      setupHls();
 
       return () => {
         if (hls) {
@@ -49,7 +66,8 @@ const LiveTV = () => {
 
   const checkUrlAvailability = async (url) => {
     try {
-      const response = await fetch(url, { method: "HEAD" });
+      // Perform a GET request instead of HEAD
+      const response = await fetch(url);
       return response.ok;
     } catch (error) {
       console.error("Error checking URL availability:", error);
@@ -65,6 +83,8 @@ const LiveTV = () => {
       setIsModalVisible(true);
     } else {
       message.error("Chaîne non disponible.");
+      setCurrentChannelUrl(""); // Clear current URL if the channel is unavailable
+      setCurrentChannelName("");
     }
   };
 
