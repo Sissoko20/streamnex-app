@@ -119,7 +119,7 @@ const LiveTV = () => {
       </Modal>
       
       <div className="channel-list">
-        <h3>Liste des chaînes</h3>
+        <h3>Liste des chaînes ({channels.length})</h3>
         {loading ? (
           <Spin tip="Chargement des chaînes..." />
         ) : (
