@@ -8,7 +8,7 @@ const Movies = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState('full movies');
-  const API_KEY = 'AIzaSyC98gXO_NLLPgeqOvETCL_CRSccdGq4V9A';
+  const API_KEY = 'AIzaSyArebEkW6UumF3UvtqhgNUWHrgET5Rb_BE';
   const API_URL = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${searchQuery}&type=video&key=${API_KEY}`;
 
   useEffect(() => {
