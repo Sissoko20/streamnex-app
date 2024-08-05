@@ -1,8 +1,9 @@
 import React from 'react';
 import { Card, Avatar } from 'antd';
+import "./ChannelCard.css"
 
 const ChannelCard = ({ channel, onClick }) => (
-  <Card
+  <Card className='cardChannel'
     hoverable
     onClick={onClick}
     style={{ marginBottom: '16px' }}

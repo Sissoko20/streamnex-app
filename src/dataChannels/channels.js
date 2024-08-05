@@ -7,13 +7,7 @@ export const channels = [
        "category":"drames",
        "logo":"https://cdn.logojoy.com/wp-content/uploads/2018/05/30165815/578-768x591.png"
     },
-    {
-        "id": 2,
-        "name": "Bloomberg TV",
-        "url": "https://bloomberg-bloombergtv-1-fr.samsung.wurl.tv/manifest/playlist.m3u8",
-        "category": "trading",
-        "logo": "https://imgs.search.brave.com/bHYuVKZAtiSgWI12hTy1zXHwC5rxO8f5vgICTFpHJDo/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9sb2dv/cy13b3JsZC5uZXQv/d3AtY29udGVudC91/cGxvYWRzLzIwMjIv/MDEvQmxvb21iZXJn/LUVtYmxlbS03MDB4/Mzk0LnBuZw"
-    },
+
     {
         "id": 3,
         "name": "Caillou",
