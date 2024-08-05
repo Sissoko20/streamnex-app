@@ -211,6 +211,4 @@ export const channels = [
         "logo":"https://imgs.search.brave.com/v2mgHuRfS04su6RYIjRSsEcmIb1cHhCZqOOYWsrZVig/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/bHluZ3NhdC5jb20v/bG9nby90di9wcC9w/YXNzaW9uLW5vdmVs/YXMtY2kucG5n"
     },
     
-    
-    
 ];
