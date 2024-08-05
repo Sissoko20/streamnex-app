@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Layout, Menu, Button } from "antd";
 import {
   SearchOutlined,
@@ -23,13 +23,14 @@ import History from "./Components/History";
 import Setting from "./Components/Settings";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { Analytics } from "@vercel/analytics/react";
+import { useMediaQuery } from 'react-responsive';
 import { throttle } from "lodash";
+import LazyLoadComponent from './Components/LazyLoadComponent';
 
-const { Sider, Content } = Layout;
-
-const LazyLoadComponent = ({ children }) => {
-  const ref = useRef();
+// Utilisation du hook personnalisé pour l'IntersectionObserver
+const useIntersectionObserver = (options) => {
   const [isVisible, setIsVisible] = useState(false);
+  const ref = React.useRef();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -39,31 +40,32 @@ const LazyLoadComponent = ({ children }) => {
           observer.disconnect();
         }
       },
-      { threshold: 0.1 }
+      options
     );
 
-    observer.observe(ref.current);
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
 
     return () => {
       if (ref.current) {
         observer.unobserve(ref.current);
       }
     };
-  }, []);
+  }, [options]);
 
-  return <div ref={ref}>{isVisible ? children : null}</div>;
+  return [ref, isVisible];
 };
 
+const { Sider, Content } = Layout;
+
 const App = () => {
-  const [selectedKey, setSelectedKey] = useState("5");
+  const [selectedKey, setSelectedKey] = useState("4");
   const [collapsed, setCollapsed] = useState(false);
+  const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
 
   const handleResize = () => {
-    if (window.innerWidth <= 768) {
-      setCollapsed(true);
-    } else {
-      setCollapsed(false);
-    }
+    setCollapsed(isMobile);
   };
 
   const throttledHandleResize = throttle(handleResize, 200);
@@ -75,7 +77,7 @@ const App = () => {
     return () => {
       window.removeEventListener("resize", throttledHandleResize);
     };
-  }, []);
+  }, [isMobile]);
 
   const renderContent = () => {
     switch (selectedKey) {
@@ -161,7 +163,7 @@ const App = () => {
         collapsible
         collapsed={collapsed}
         onCollapse={() => setCollapsed(!collapsed)}
-        className={window.innerWidth <= 768 ? "hide-sider" : ""}
+        className={isMobile ? "hide-sider" : ""}
         style={{
           overflow: "auto",
           height: "100vh",
