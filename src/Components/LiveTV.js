@@ -126,7 +126,7 @@ const LiveTV = () => {
           <Row gutter={[16, 16]}>
             <Suspense fallback={<Spin tip="Chargement des chaînes..." />}>
               {channels.map((channel) => (
-                <Col xs={24} sm={12} md={8} key={channel.id}>
+                <Col xs={24} sm={12} md={8} lg={6} key={channel.id}>
                   <ChannelCard
                     channel={channel}
                     onClick={() => handleChannelChange(channel)}

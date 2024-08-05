@@ -60,3 +60,64 @@
     grid-template-columns: repeat(3, 1fr);
   }
 }
+
+/* S'assurer que le layout est responsive */
+.ant-layout {
+  background: #fff;
+}
+
+.ant-layout-sider {
+  background: #001529;
+  transition: all 0.2s;
+}
+
+.hide-sider {
+  display: none;
+}
+
+.ant-menu-dark .ant-menu-item-selected {
+  background-color: transparent;
+  border-bottom: 2px solid white;
+}
+
+.ant-menu-dark .ant-menu-item {
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .ant-layout-sider {
+    position: absolute;
+    z-index: 1000;
+  }
+
+  .ant-layout-sider.collapsed {
+    width: 0 !important;
+  }
+
+  .ant-layout-sider .ant-menu {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ant-layout-sider .ant-menu-item {
+    padding: 10px 20px;
+  }
+
+  .hide-sider {
+    display: block;
+  }
+}
+
+.ant-layout-content {
+  margin: 24px 16px 0;
+  overflow: initial;
+}
+
+.ant-layout-content > div {
+  padding: 24px;
+  background: #fff;
+  min-height: 360px;
+}

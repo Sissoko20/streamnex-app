@@ -41,5 +41,43 @@
 
 
 
+.channel-list {
+  padding: 20px;
+}
+
+.video-player {
+  width: 100%;
+  height: auto;
+}
+
+@media (max-width: 768px) {
+  .channel-list {
+    padding: 10px;
+  }
+  .video-player {
+    width: 100vw;
+    height: 100vh;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1200px) {
+  .channel-list {
+    padding: 15px;
+  }
+  .video-player {
+    width: 80vw;
+    height: 80vh;
+  }
+}
+
+@media (min-width: 1201px) {
+  .channel-list {
+    padding: 30px;
+  }
+  .video-player {
+    width: 60vw;
+    height: 60vh;
+  }
+}
 
 
