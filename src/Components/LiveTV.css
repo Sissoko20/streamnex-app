@@ -54,20 +54,14 @@
   .channel-list {
     padding: 10px;
   }
-  .video-player {
-    width: 100vw;
-    height: 100vh;
-  }
+
 }
 
 @media (min-width: 769px) and (max-width: 1200px) {
   .channel-list {
     padding: 15px;
   }
-  .video-player {
-    width: 80vw;
-    height: 80vh;
-  }
+
 }
 
 @media (min-width: 1201px) {
