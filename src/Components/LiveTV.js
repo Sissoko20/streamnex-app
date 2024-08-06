@@ -13,9 +13,20 @@ const LiveTV = () => {
   const [currentChannelUrl, setCurrentChannelUrl] = useState("");
   const [currentChannelName, setCurrentChannelName] = useState("");
 
+  const timeout = (ms) => {
+    return new Promise((_, reject) => setTimeout(() => reject(new Error("Request timed out")), ms));
+  };
+
+  const fetchWithTimeout = async (url, options, timeoutDuration) => {
+    return Promise.race([
+      fetch(url, options),
+      timeout(timeoutDuration),
+    ]);
+  };
+
   const checkUrlAvailability = async (url) => {
     try {
-      const response = await fetch(url);
+      const response = await fetchWithTimeout(url, {}, 5000); // 5 seconds timeout
       return response.ok;
     } catch (error) {
       console.error("Error checking URL availability:", error);
