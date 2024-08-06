@@ -173,7 +173,7 @@ export const channels = [
         "name": "REFLET TV",
         "url": "https://edge-a3.evrideo.tv/8f37c9f0-fe22-44f4-b64a-76ad11730daf_1000026630_HLS/manifest.m3u8",
         "category":"music",
-        "logo":"https://reflet.tv/wp-content/uploads/2022/12/Logo_RTV.svg"
+        "logo":"https://i.imgur.com/EauXR22.png"
     },
     {
         "id": 28,
@@ -210,5 +210,189 @@ export const channels = [
         "category":"serie-novelas",
         "logo":"https://imgs.search.brave.com/v2mgHuRfS04su6RYIjRSsEcmIb1cHhCZqOOYWsrZVig/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/bHluZ3NhdC5jb20v/bG9nby90di9wcC9w/YXNzaW9uLW5vdmVs/YXMtY2kucG5n"
     },
+    {
+        "id": 33,
+        "name": "TV5 MONDE",
+        "url": "https://ott.tv5monde.com/Content/HLS/Live/channel(info)/index.m3u8",
+        "category":"en direct",
+        "logo":"https://i.imgur.com/NcysrWH.png"
+        
+    },
+
+     {  "id":34,
+       "name":"FilmRise Sci-Fi",
+        "url":"https://d39g1vxj2ef6in.cloudfront.net/v1/manifest/3fec3e5cac39a52b2132f9c66c83dae043dc17d4/prod-rakuten-stitched/d658fce8-d72e-4407-ba5b-14b823553af5/5.m3u8",
+        "logo":""
+     },
+    { 
+        "id":35,
+     "name":"Gulli",
+    "url":"https://origin2-6play.live.6cloud.fr/pool_rnpls9by/gulli/sixplaysd/hls_short_q2hyb21h_gulli/index.m3u8",
+    },
+
+    {   "id":36,
+        "url":"http://69.64.57.208/cherifla/playlist.m3u8",
+        "name":"CherifLa TV",
+        "category":"vie et culture",
+    },
+    {   "id":37,
+        "url":"http://69.64.57.208/cherifla/playlist.m3u8",
+        "name":"CherifLa TV",
+        "category":"en direct",
+    },
+
+    {
+        "id":38,
+        "name": "ORTM 1",
+        "url":"http://69.64.57.208/ortm/playlist.m3u8",
+        "category":"en direct",
+    },
+    {
+        "id":39,
+        "name":"TM1",
+        "url":"http://69.64.57.208/tm1/playlist.m3u8",
+        "category":"en direct",
+        
+    },
+    {
+            "id":40,
+            "url":"https://nrj12.nrjaudio.fm/hls/live/2038374-b/nrj_12/4/media.m3u8",
+            "name":"NRJ 12",
+            "category":"music"
+        
+        
+    },
+    {
+        "id": 41,
+        "name": "20 Minutes TV",
+        "url": "https://lives.digiteka.com/stream/86d3e867-a272-496b-8412-f59aa0104771/index.m3u8",
+        "tvg-id": "20MinutesTV.fr"
+    },
+    {
+        "id": 42,
+        "name": "A12 TV (720p)",
+        "url": "https://edge12.vedge.infomaniak.com/livecast/ik:africa24/manifest.m3u8",
+        "tvg-id": "A12TV.fr"
+    },
+    {
+        "id": 43,
+        "name": "Assembl\u00e9e Nationale (1080p) [Not 24/7]",
+        "url": "http://anorigin.vodalys.com/live/live36/index36_12856975.m3u8?DVR=",
+        "tvg-id": "AssembleeNationale.fr"
+    },
+    {
+        "id": 44,
+        "name": "Bblack! Classik",
+        "url": "http://livevideo.vedge.infomaniak.com/livecast/ik:bblackclassik/manifest.m3u8",
+        "tvg-id": "BblackClassik.fr"
+    },
+    {
+        "id": 45,
+        "name": "BIP TV (480p) [Not 24/7]",
+        "url": "#EXTINF:-1 tvg-id=\"Canal32.fr\",Canal 32 (1080p)",
+        "tvg-id": "BIPTV.fr"
+    },
+    {
+        "id": 46,
+        "name": "CDirect (360p)",
+        "url": "http://51.254.199.122:8080/cdirectTV/index.m3u8",
+        "tvg-id": "CDirect.fr"
+    },
+    {
+        "id": 47,
+        "name": "DBM (1080p)",
+        "url": "https://edge.vedge.infomaniak.com/livecast/ik:dbmtv/manifest.m3u8",
+        "tvg-id": "DBMTV.fr"
+    },
+    {
+        "id": 48,
+        "name": "DBM TV (1080p)",
+        "url": "https://dbmtv.vedge.infomaniak.com/livecast/dbmtv/playlist.m3u8",
+        "tvg-id": "DBMTV.fr"
+    },
+    {
+        "id": 49,
+        "name": "FashionTV Czech&Slovak (450p) [Not 24/7]",
+        "url": "http://lb.streaming.sk/fashiontv/stream/playlist.m3u8",
+        "tvg-id": "FashionTVCzechSlovak.fr"
+    },
+    {
+        "id": 50,
+        "name": "Generations TV (576p)",
+        "url": "https://edge.vedge.infomaniak.com/livecast/ik:generation-tv/manifest.m3u8",
+        "tvg-id": "GenerationsTV.fr"
+    },
+    {
+        "id": 51,
+        "name": "HolyGod TV (720p)",
+        "url": "https://128989.gvideo.io/streams/128989_522806/playlist.m3u8",
+        "tvg-id": "HolyGodTV.fr"
+    },
+    {
+        "id": 52,
+        "name": "KTO (404p) [Not 24/7]",
+        "url": "https://live-kto.akamaized.net/hls/live/2033284/KTO/master.m3u8",
+        "tvg-id": "KTO.fr"
+    },
+    {
+        "id": 53,
+        "name": "Littoral FM (720p)",
+        "url": "https://live.creacast.com/littoralfm-ch1/stream/playlist.m3u8",
+        "tvg-id": "LittoralFMTV.fr"
+    },
+    {
+        "id": 54,
+        "name": "MDL (720p)",
+        "url": "http://tv.mondeduloisir.fr:1935/tixtv/smil:web.smil/playlist.m3u8",
+        "tvg-id": "MDL.fr"
+    },
+    {
+        "id": 55,
+        "name": "Museum TV",
+        "url": "https://live2.creacast.com/museum-france/smil:museum-france.smil/master.m3u8",
+        "tvg-id": "MuseumTVFrench.fr"
+    },
+    {
+        "id": 56,
+        "name": "MyZen TV (1080p)",
+        "url": "https://cdn-ue1-prod.tsv2.amagi.tv/linear/amg01255-secomcofites-my-myzen-en-plex/playlist.m3u8",
+        "tvg-id": "MyZenTV.fr"
+    },
+    {
+        "id": 57,
+        "name": "RMC D\u00e9couverte (1080p)",
+        "url": "https://d2mt8for1pddy4.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-6uronj7gzvy4j/index.m3u8",
+        "tvg-id": "RMCDecouverte.fr"
+    },
+    {
+        "id": 58,
+        "name": "Sport En France (1080p)",
+        "url": "https://sp1564435593.mytvchain.info/live/sp1564435593/index.m3u8",
+        "tvg-id": "SportenFrance.fr"
+    },
+    {
+        "id": 59,
+        "name": "TV3V (720p)",
+        "url": "https://tv3v.hdr-tv.com/live/tv3v/livestream/master.m3u8",
+        "tvg-id": "TV3V.fr"
+    },
+    {
+        "id": 60,
+        "name": "TV78 (720p)",
+        "url": "https://streamtv.cdn.dvmr.fr/TV78/ngrp:tv78.stream_all/master.m3u8",
+        "tvg-id": "TV78.fr"
+    },
+    {
+        "id": 61,
+        "name": "TVR (Bretagne) (720p)",
+        "url": "https://streamtv.cdn.dvmr.fr/TVR/ngrp:tvr.stream_all/master.m3u8",
+        "tvg-id": "TVR.fr"
+    },
+    {
+        "id": 62,
+        "name": "RMC Story",
+        "url": "https://d36bxc1bknkxrk.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-3ewcp19zjaxpt/index.m3u8",
+        "tvg-id": "RMCStory.fr"
+    }
     
 ];
