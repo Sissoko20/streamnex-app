@@ -26,7 +26,7 @@ const LiveTV = () => {
 
   const checkUrlAvailability = async (url) => {
     try {
-      const response = await fetchWithTimeout(url, {}, 5000); // 5 seconds timeout
+      const response = await fetchWithTimeout(url, {}, 20000); // 5 seconds timeout
       return response.ok;
     } catch (error) {
       console.error("Error checking URL availability:", error);
