@@ -57,7 +57,11 @@ const LiveTV = () => {
     try {
       const querySnapshot = await getDocs(collection(db, "channels"));
       const channelsData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setChannels(channelsData);
+      
+      // Supprimer les doublons basés sur l'URL
+      const uniqueChannels = Array.from(new Map(channelsData.map(channel => [channel.url, channel])).values());
+      
+      setChannels(uniqueChannels);
     } catch (error) {
       console.error("Error fetching channels:", error);
       message.error("Erreur lors de la récupération des chaînes.");
@@ -101,7 +105,7 @@ const LiveTV = () => {
           <Row gutter={[16, 16]}>
             <Suspense fallback={<Spin tip="Chargement des chaînes..." />}>
               {channels.map((channel) => (
-                <Col xs={24} sm={12} md={8} lg={6} key={channel.id}>
+                <Col xs={24} sm={12} md={8} lg={6} key={channel.url}>
                   <ChannelCard
                     channel={channel}
                     onClick={() => handleChannelChange(channel)}
