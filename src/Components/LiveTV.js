@@ -31,6 +31,7 @@ const LiveTV = () => {
       return response.ok;
     } catch (error) {
       console.error("Error checking URL availability:", error);
+      console.log(error);
       return false;
     }
   };
